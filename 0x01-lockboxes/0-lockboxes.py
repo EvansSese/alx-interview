@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+"""Lockboxes function """
 
 
 def canUnlockAll(boxes):
