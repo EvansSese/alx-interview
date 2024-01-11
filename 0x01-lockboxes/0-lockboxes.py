@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
 """Lockboxes function """
 
 
@@ -15,9 +15,6 @@ def canUnlockAll(boxes):
     if not boxes or not isinstance(boxes, list):
         # Invalid input, return False
         return False
-
-    if len(boxes) <= 1 or boxes == [[]]:
-        return True
 
     # Initialize a set to keep track of the opened boxes
     opened_boxes = set()
