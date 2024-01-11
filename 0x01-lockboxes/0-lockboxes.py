@@ -17,6 +17,9 @@ def canUnlockAll(boxes):
         # Invalid input, return False
         return False
 
+    if len(boxes) <= 1 or boxes == [[]]:
+        return True
+
     # Initialize a set to keep track of the opened boxes
     opened_boxes = set()
 
