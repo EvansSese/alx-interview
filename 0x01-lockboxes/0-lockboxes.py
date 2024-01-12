@@ -33,9 +33,9 @@ def canUnlockAll(boxes):
         open_box(key)
 
     if len(closed_boxes) > 0:
-        return True
-    else:
         return False
+    else:
+        return True
 
 
 if __name__ == "__main__":
