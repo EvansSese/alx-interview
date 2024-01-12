@@ -13,34 +13,28 @@ def canUnlockAll(boxes):
     Returns:
     - bool: True if all boxes can be opened, False otherwise.
     """
-    if not boxes or not isinstance(boxes, list):
-        # Invalid input, return False
+    if boxes is None or not isinstance(boxes, list):
         return False
 
-    if len(boxes) <= 1 or boxes == [[]]:
+    opened_boxes = {0}
+    closed_boxes = set(range(1, len(boxes)))
+    keys = set(boxes[0])
+
+    def open_box(key):
+        if key in closed_boxes:
+            opened_boxes.add(key)
+            closed_boxes.remove(key)
+            new_keys = boxes[key]
+            for new_key in new_keys:
+                open_box(new_key)
+
+    for key in keys:
+        open_box(key)
+
+    if len(closed_boxes) > 0:
         return True
-
-    # Initialize a set to keep track of the opened boxes
-    opened_boxes = set()
-
-    # Add the first box to the set of opened boxes
-    opened_boxes.add(0)
-
-    # Initialize a stack to perform depth-first search
-    stack = [0]
-
-    # Perform depth-first search to open boxes
-    while stack:
-        current_box = stack.pop()
-
-        for key in boxes[current_box]:
-            if key not in opened_boxes:
-                # If the key opens a new box, add it to the set of opened boxes
-                opened_boxes.add(key)
-                stack.append(key)
-
-    # Check if all boxes are opened
-    return len(opened_boxes) == len(boxes)
+    else:
+        return False
 
 
 if __name__ == "__main__":
