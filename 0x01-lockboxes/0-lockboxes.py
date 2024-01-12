@@ -21,6 +21,7 @@ def canUnlockAll(boxes):
     keys = set(boxes[0])
 
     def open_box(key):
+        """Open each box"""
         if key in closed_boxes:
             opened_boxes.add(key)
             closed_boxes.remove(key)
