@@ -21,4 +21,3 @@ def minOperations(n):
 
 if __name__ == "__main__":
     minOperations(9)
-
