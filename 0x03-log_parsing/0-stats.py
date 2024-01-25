@@ -23,7 +23,7 @@ def process_line(line: str, metrics: dict) -> dict:
     return metrics
 
 
-def print_metrics(metrics: dict):
+def print_metrics(metrics: dict) -> None:
     """Print the metrics"""
     print(f"File size: {metrics['total_size']}")
     for status_code in sorted(metrics['status_counts']):
@@ -32,7 +32,7 @@ def print_metrics(metrics: dict):
             print(f"{status_code}: {count}")
 
 
-def main():
+def main()-> None:
     """Entry point"""
     metrics = {
         'total_size': 0,
