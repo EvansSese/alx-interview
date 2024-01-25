@@ -28,7 +28,8 @@ def print_metrics(metrics):
     print(f"File size: {metrics['total_size']}")
     for status_code in sorted(metrics['status_counts']):
         count = metrics['status_counts'][status_code]
-        print(f"{status_code}: {count}")
+        if count > 0:
+            print(f"{status_code}: {count}")
 
 
 def main():
