@@ -4,7 +4,7 @@
 import sys
 
 
-def process_line(line, metrics):
+def process_line(line: str, metrics: dict) -> dict:
     """Parse the line using the provided format"""
     try:
         parts = line.split()
@@ -23,7 +23,7 @@ def process_line(line, metrics):
     return metrics
 
 
-def print_metrics(metrics):
+def print_metrics(metrics: dict):
     """Print the metrics"""
     print(f"File size: {metrics['total_size']}")
     for status_code in sorted(metrics['status_counts']):
