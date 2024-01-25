@@ -3,55 +3,36 @@
 
 import sys
 
+if __name__ == '__main__':
 
-def process_line(line: str, metrics: dict) -> dict:
-    """Parse the line using the provided format"""
-    try:
-        parts = line.split()
-        ip_address = parts[0]
-        status_code = int(parts[-2])
-        file_size = int(parts[-1])
-    except (ValueError, IndexError):
-        """Skip the line if the format is not as expected"""
-        return metrics
+    filesize, count = 0, 0
+    codes = ["200", "301", "400", "401", "403", "404", "405", "500"]
+    stats = {k: 0 for k in codes}
 
-    """Update metrics"""
-    metrics['total_size'] += file_size
-    metrics['line_count'] += 1
-    metrics['status_counts'][status_code] += 1
-
-    return metrics
-
-
-def print_metrics(metrics: dict) -> None:
-    """Print the metrics"""
-    print(f"File size: {metrics['total_size']}")
-    for status_code in sorted(metrics['status_counts']):
-        count = metrics['status_counts'][status_code]
-        if count > 0:
-            print(f"{status_code}: {count}")
-
-
-def main()-> None:
-    """Entry point"""
-    metrics = {
-        'total_size': 0,
-        'line_count': 0,
-        'status_counts': {200: 0, 301: 0, 400: 0, 401: 0, 403: 0, 404: 0,
-                          405: 0, 500: 0}
-    }
+    def print_stats(stats: dict, file_size: int) -> None:
+        """Prints the stats"""
+        print("File size: {:d}".format(file_size))
+        for k, v in sorted(stats.items()):
+            if v:
+                print("{}: {}".format(k, v))
 
     try:
         for line in sys.stdin:
-            metrics = process_line(line.strip(), metrics)
-
-            if metrics['line_count'] % 10 == 0:
-                print_metrics(metrics)
-
+            count += 1
+            data = line.split()
+            try:
+                status_code = data[-2]
+                if status_code in stats:
+                    stats[status_code] += 1
+            except BaseException:
+                pass
+            try:
+                filesize += int(data[-1])
+            except BaseException:
+                pass
+            if count % 10 == 0:
+                print_stats(stats, filesize)
+        print_stats(stats, filesize)
     except KeyboardInterrupt:
-        """Handle keyboard interruption (CTRL + C)"""
-        print_metrics(metrics)
-
-
-if __name__ == "__main__":
-    main()
+        print_stats(stats, filesize)
+        raise
