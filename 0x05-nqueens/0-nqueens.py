@@ -4,61 +4,60 @@
 import sys
 
 
-def is_safe(board, row, col, n):
-    """Check if there is a queen in the same column"""
-    for i in range(row):
-        if board[i][col] == 1:
-            return False
+class NQueen:
+    """ Class for solving N Queen Problem """
+    def __init__(self, n):
+        """ Global Variables """
+        self.n = n
+        self.x = [0 for i in range(n + 1)]
+        self.res = []
 
-    """Check upper left diagonal"""
-    for i, j in zip(range(row, -1, -1), range(col, -1, -1)):
-        if board[i][j] == 1:
-            return False
+    def place(self, k, i):
+        """ Checks if k Queen can be placed in i column (True)
+        or if the are attacking queens in row or diagonal (False)
+        """
+        for j in range(1, k):
+            if self.x[j] == i or \
+               abs(self.x[j] - i) == abs(j - k):
+                return 0
+        return 1
 
-    """Check upper right diagonal"""
-    for i, j in zip(range(row, -1, -1), range(col, n)):
-        if board[i][j] == 1:
-            return False
-
-    return True
-
-
-def solve_nqueens_util(board, row, n, solutions):
-    """Solve nqueens util"""
-    if row == n:
-        solutions.append([i for i in board])
-        return
-
-    for col in range(n):
-        if is_safe(board, row, col, n):
-            board[row][col] = 1
-            solve_nqueens_util(board, row + 1, n, solutions)
-            board[row][col] = 0
-
-
-def solve_nqueens(n):
-    """ Function to solve nqueens"""
-    if not n.isdigit():
-        print("N must be a number")
-        sys.exit(1)
-
-    n = int(n)
-
-    if n < 4:
-        print("N must be at least 4")
-        sys.exit(1)
-
-    board = [[0 for _ in range(n)] for _ in range(n)]
-    solutions = []
-    solve_nqueens_util(board, 0, n, solutions)
-
-    for solution in solutions:
-        print(solution)
+    def nQueen(self, k):
+        """ Tries to place every queen in the board
+        Args:
+        k: starting queen from which to evaluate (should be 1)
+        """
+        for i in range(1, self.n + 1):
+            if self.place(k, i):
+                self.x[k] = i
+                if k == self.n:
+                    solution = []
+                    for i in range(1, self.n + 1):
+                        solution.append([i - 1, self.x[i] - 1])
+                    self.res.append(solution)
+                else:
+                    self.nQueen(k + 1)
+        return self.res
 
 
-if __name__ == "__main__":
-    if len(sys.argv) != 2:
-        print("Usage: nqueens N")
-        sys.exit(1)
+if len(sys.argv) != 2:
+    print("Usage: nqueens N")
+    sys.exit(1)
 
-    solve_nqueens(sys.argv[1])
+N = sys.argv[1]
+
+try:
+    N = int(N)
+except ValueError:
+    print("N must be a number")
+    sys.exit(1)
+
+if N < 4:
+    print("N must be at least 4")
+    sys.exit(1)
+
+queen = NQueen(N)
+res = queen.nQueen(1)
+
+for i in res:
+    print(i)
