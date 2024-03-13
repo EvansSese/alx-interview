@@ -26,6 +26,9 @@ def isWinner(x, nums):
     """Play the prime game"""
     maria = 0
     ben = 0
+    if len(nums) == 0 or x == 0:
+        return None
+
     for i in range(x):
         """print(f"Round: {i}")"""
         maria_wins = False
