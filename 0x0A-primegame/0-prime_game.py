@@ -33,34 +33,25 @@ def isWinner(x, nums):
     if x != len(nums):
         return None
 
-    maria = 0
-    ben = 0
+    maria_wins = 0
+    ben_wins = 0
 
     for i in range(x):
         """print(f"Round: {i}")"""
-        maria_wins = False
-        ben_wins = False
         primes = [j for j in range(0, nums[i] + 1) if is_prime(j)]
         """print(primes)"""
 
         if len(primes) == 0:
-            ben_wins = True
-            maria_wins = False
+            ben_wins += 1
         else:
             if play_game(primes) == 0:
-                maria_wins = True
-                ben_wins = False
+                maria_wins += 1
             else:
-                maria_wins = False
-                ben_wins = True
-        if ben_wins:
-            ben += 1
-        if maria_wins:
-            maria += 1
+                ben_wins += 1
 
-    if maria > ben:
+    if maria_wins > ben_wins:
         return "Maria"
-    elif ben > maria:
+    elif ben_wins > maria_wins:
         return "Ben"
     else:
         return None
