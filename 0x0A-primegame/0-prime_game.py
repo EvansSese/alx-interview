@@ -18,7 +18,11 @@ def play_game(primes):
     while primes:
         choice = primes.pop(0)
         primes = [prime for prime in primes if prime % choice != 0]
+        if len(primes) == 0:
+            break
+        print(f"Choice: {choice}, new primes {primes}")
         player = 1 - player
+    print(f"Winner for this round {player}")
     return player
 
 
@@ -33,7 +37,7 @@ def isWinner(x, nums):
     ben = 0
 
     for i in range(x):
-        """print(f"Round: {i}")"""
+        print(f"Round: {i}")
         maria_wins = False
         ben_wins = False
         primes = [j for j in range(0, nums[i] + 1) if is_prime(j)]
