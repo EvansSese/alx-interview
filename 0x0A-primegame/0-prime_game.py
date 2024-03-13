@@ -24,10 +24,13 @@ def play_game(primes):
 
 def isWinner(x, nums):
     """Play the prime game"""
+    if x <= 0 or nums is None:
+        return None
+    if x != len(nums):
+        return None
+
     maria = 0
     ben = 0
-    if len(nums) == 0 or x == 0:
-        return None
 
     for i in range(x):
         """print(f"Round: {i}")"""
