@@ -12,31 +12,45 @@ def is_prime(num):
     return True
 
 
-def play_game(n):
-    """Start the game"""
-    primes = [i for i in range(2, n + 1) if is_prime(i)]
-    player = 0  # 0 for Maria, 1 for Ben
+def play_game(primes):
+    """Choose prime"""
+    player = 0
     while primes:
-        prime_choice = primes.pop(0)
-        primes = [num for num in primes if num % prime_choice != 0]
+        choice = primes.pop(0)
+        primes = [prime for prime in primes if prime % choice != 0]
         player = 1 - player
     return player
 
 
 def isWinner(x, nums):
-    """Determine the winner"""
-    maria_wins = 0
-    ben_wins = 0
-    for n in nums:
-        winner = play_game(n)
-        if winner == 0:
-            maria_wins += 1
-        elif winner == 1:
-            ben_wins += 1
+    """Play the prime game"""
+    maria = 0
+    ben = 0
+    for i in range(x):
+        """print(f"Round: {i}")"""
+        maria_wins = False
+        ben_wins = False
+        primes = [j for j in range(0, nums[i] + 1) if is_prime(j)]
+        """print(primes)"""
 
-    if maria_wins > ben_wins:
+        if len(primes) == 0:
+            ben_wins = True
+            maria_wins = False
+        else:
+            if play_game(primes) == 0:
+                maria_wins = True
+                ben_wins = False
+            else:
+                maria_wins = False
+                ben_wins = True
+        if ben_wins:
+            ben += 1
+        if maria_wins:
+            maria += 1
+
+    if maria > ben:
         return "Maria"
-    elif ben_wins > maria_wins:
+    elif ben > maria:
         return "Ben"
     else:
         return None
