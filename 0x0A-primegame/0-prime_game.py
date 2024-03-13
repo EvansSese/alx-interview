@@ -42,7 +42,7 @@ def isWinner(x, nums):
         """print(primes)"""
 
         if len(primes) == 0:
-            ben_wins += 1
+            pass
         else:
             if play_game(primes) == 0:
                 maria_wins += 1
