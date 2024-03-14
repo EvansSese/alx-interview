@@ -20,8 +20,9 @@ def play_game(primes):
         primes = [prime for prime in primes if prime % choice != 0]
         if len(primes) == 0:
             break
-        """print(f"Choice: {choice}, new primes {primes}")"""
-        player = 1 - player
+        else:
+            """print(f"Choice: {choice}, new primes {primes}")"""
+            player = 1 - player
     """print(f"Winner for this round {player}")"""
     return player
 
